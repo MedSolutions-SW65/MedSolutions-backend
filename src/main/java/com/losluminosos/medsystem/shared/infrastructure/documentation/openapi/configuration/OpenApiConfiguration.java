@@ -27,20 +27,6 @@ public class OpenApiConfiguration {
                         .url("https://losluminosos-sw57.github.io/LandingPageMedSystem/"));
 
 
-        final String securitySchemeName = "bearerAuth";
-
-        openApi.addSecurityItem(new SecurityRequirement()
-                        .addList(securitySchemeName))
-                .components(new Components()
-                        .addSecuritySchemes(securitySchemeName,
-                                new SecurityScheme()
-                                        .name(securitySchemeName)
-                                        .type(SecurityScheme.Type.HTTP)
-                                        .scheme("bearer")
-                                        .bearerFormat("JWT")));
-
-
-
         return openApi;
     }
 }
