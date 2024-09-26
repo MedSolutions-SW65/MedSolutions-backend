@@ -27,7 +27,7 @@ public class OpenApiConfiguration {
                         .url("https://losluminosos-sw57.github.io/LandingPageMedSystem/"))
                 .servers(List.of(
                         new Server().url("http://localhost:8080").description("Development Server"),
-                        new Server().url("https://cartunn.up.railway.app").description("production/ Server")
+                        new Server().url("https://medsolutions.up.railway.app").description("production/ Server")
                 ));
 
 
