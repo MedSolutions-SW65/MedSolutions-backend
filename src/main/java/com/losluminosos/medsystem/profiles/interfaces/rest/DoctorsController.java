@@ -58,13 +58,4 @@ public class DoctorsController {
         return ResponseEntity.ok(doctorResource);
     }
 
-    @GetMapping("userId/{id}")
-    public ResponseEntity<DoctorResource> getDoctorByUserId(@PathVariable Long id) {
-        var getDoctorByUserIdQuery = new GetDoctorByUserIdQuery(id);
-        var doctor = doctorQueryService.handle(getDoctorByUserIdQuery);
-        if (doctor.isEmpty())
-            return ResponseEntity.notFound().build();
-        var doctorResource = DoctorResourceFromEntityAssembler.toResourceFromEntity(doctor.get());
-        return ResponseEntity.ok(doctorResource);
-    }
 }

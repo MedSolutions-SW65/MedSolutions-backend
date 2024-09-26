@@ -55,14 +55,4 @@ public class PatientsController {
         var patientResource = PatientResourceFromEntityAssembler.toResourceFromEntity(patient.get());
         return ResponseEntity.ok(patientResource);
     }
-
-    @GetMapping("userId/{id}")
-    public ResponseEntity<PatientResource> getPatientByUserId(@PathVariable Long id) {
-        var getPatientByUserIdQuery = new GetPatientByUserIdQuery(id);
-        var patient = patientQueryService.handle(getPatientByUserIdQuery);
-        if (patient.isEmpty())
-            return ResponseEntity.notFound().build();
-        var patientResource = PatientResourceFromEntityAssembler.toResourceFromEntity(patient.get());
-        return ResponseEntity.ok(patientResource);
-    }
 }

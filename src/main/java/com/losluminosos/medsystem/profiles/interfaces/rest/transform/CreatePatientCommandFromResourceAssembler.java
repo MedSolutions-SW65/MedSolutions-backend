@@ -14,8 +14,7 @@ public class CreatePatientCommandFromResourceAssembler {
                 resource.number(),
                 resource.city(),
                 resource.postalCode(),
-                resource.country(),
-                resource.userId()
+                resource.country()
         );
     }
 }

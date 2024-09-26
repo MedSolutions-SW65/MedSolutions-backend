@@ -9,7 +9,6 @@ public record CreatePatientResource(
         String number,
         String city,
         String postalCode,
-        String country,
-        Long userId
+        String country
 ) {
 }

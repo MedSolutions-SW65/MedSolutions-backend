@@ -10,6 +10,5 @@ import java.util.Optional;
 
 public interface DoctorQueryService {
     Optional<Doctor> handle(GetDoctorByIdQuery query);
-    Optional<Doctor> handle(GetDoctorByUserIdQuery query);
     List<Doctor> handle(GetAllDoctorsQuery query);
 }

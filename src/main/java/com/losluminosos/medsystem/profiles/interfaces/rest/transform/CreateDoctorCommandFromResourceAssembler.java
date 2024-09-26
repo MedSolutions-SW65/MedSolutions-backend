@@ -11,8 +11,7 @@ public class CreateDoctorCommandFromResourceAssembler {
                 resource.email(),
                 resource.phone(),
                 resource.specialty(),
-                resource.licenceNumber(),
-                resource.userId()
+                resource.licenceNumber()
         );
     }
 }

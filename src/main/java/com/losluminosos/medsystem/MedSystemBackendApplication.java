@@ -13,22 +13,5 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MedSystemBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MedSystemBackendApplication.class, args);
-
-	}
-	@Configuration
-	public static class MyConfiguration {
-		@Bean
-		public WebMvcConfigurer corsConfigurer() {
-			return new WebMvcConfigurer() {
-				@Override
-				public void addCorsMappings(CorsRegistry registry) {
-					registry.addMapping("/*")
-							.allowedOrigins("")
-							.allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH")
-							.allowedHeaders("*");
-				}
-			};
-		}
-	}
+		SpringApplication.run(MedSystemBackendApplication.class, args); }
 }

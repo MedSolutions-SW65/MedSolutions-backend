@@ -23,8 +23,6 @@ public class Patient extends AuditableAbstractAggregateRoot<Patient> {
             @AttributeOverride(name = "country", column = @Column(name = "address_country"))})
     private StreetAddress address;
 
-    private Long userId;
-
     @Embedded
     private PersonName name;
 
@@ -44,7 +42,6 @@ public class Patient extends AuditableAbstractAggregateRoot<Patient> {
         this.email = new EmailAddress(command.email());
         this.phone = command.phone();
         this.address = new StreetAddress(command.street(), command.number(), command.city(), command.postalCode(), command.country());
-        this.userId = command.userId();
     }
 
     public String getStreetAddress() {

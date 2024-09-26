@@ -25,11 +25,6 @@ public class DoctorQueryServiceImpl implements DoctorQueryService {
     }
 
     @Override
-    public Optional<Doctor> handle(GetDoctorByUserIdQuery query) {
-        return doctorRepository.findByUserId(query.id());
-    }
-
-    @Override
     public List<Doctor> handle(GetAllDoctorsQuery query) {return doctorRepository.findAll();}
 
 }

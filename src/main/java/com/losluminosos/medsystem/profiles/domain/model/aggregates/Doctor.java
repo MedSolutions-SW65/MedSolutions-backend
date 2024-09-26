@@ -15,8 +15,6 @@ public class Doctor extends AuditableAbstractAggregateRoot<Doctor> {
 
     private String licenseNumber;
 
-    private Long userId;
-
     @Embedded
     private PersonName name;
 
@@ -35,7 +33,6 @@ public class Doctor extends AuditableAbstractAggregateRoot<Doctor> {
         this.phone = command.phone();
         this.specialty = command.specialty();
         this.licenseNumber = command.licenceNumber();
-        this.userId = command.userId();
     }
 
     public String getFullName() {

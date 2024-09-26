@@ -6,6 +6,5 @@ public record CreateDoctorResource(
         String email,
         String phone,
         String specialty,
-        String licenceNumber,
-        Long userId
+        String licenceNumber
 ) {}
