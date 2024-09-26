@@ -3,7 +3,6 @@ package com.losluminosos.medsystem.profiles.application.internal.queryservices;
 import com.losluminosos.medsystem.profiles.domain.model.aggregates.Doctor;
 import com.losluminosos.medsystem.profiles.domain.model.queries.GetAllDoctorsQuery;
 import com.losluminosos.medsystem.profiles.domain.model.queries.GetDoctorByIdQuery;
-import com.losluminosos.medsystem.profiles.domain.model.queries.GetDoctorByUserIdQuery;
 import com.losluminosos.medsystem.profiles.domain.services.DoctorQueryService;
 import com.losluminosos.medsystem.profiles.infrastructure.persistence.jpa.repositories.DoctorRepository;
 import org.springframework.stereotype.Service;
