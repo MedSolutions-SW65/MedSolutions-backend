@@ -7,5 +7,6 @@ public record AppointmentResource(
         Long doctorId,
         Long patientId,
         String date,
-        String reason
+        String reason,
+        String specialty
 ) { }

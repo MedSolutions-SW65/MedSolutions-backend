@@ -2,6 +2,7 @@ package com.losluminosos.medsystem.appointments.domain.model.aggregates;
 
 import com.losluminosos.medsystem.appointments.domain.model.commands.CreateAppointmentCommand;
 import com.losluminosos.medsystem.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
+import com.losluminosos.medsystem.shared.domain.model.entities.Specialty;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -19,14 +20,18 @@ public class Appointment extends AuditableAbstractAggregateRoot<Appointment> {
 
     private String reason;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "specialty_id")
+    Specialty specialty;
 
     public Appointment() {}
 
-    public Appointment(CreateAppointmentCommand command){
-        this.doctorId = command.doctorId();
-        this.patientId = command.patientId();
-        this.date = command.date();
-        this.reason = command.reason();
+    public Appointment(Long doctorId, Long patientId, String date, String reason, Specialty specialty){
+        this.doctorId = doctorId;
+        this.patientId = patientId;
+        this.date = date;
+        this.reason = reason;
+        this.specialty = specialty;
     }
 
     public Appointment updateReason(String reason) {

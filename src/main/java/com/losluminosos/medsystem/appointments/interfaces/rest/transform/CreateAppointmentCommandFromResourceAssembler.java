@@ -9,7 +9,7 @@ public class CreateAppointmentCommandFromResourceAssembler {
                 resource.doctorId(),
                 resource.patientId(),
                 resource.date(),
-                resource.reason()
-                );
+                resource.reason(),
+                resource.specialty());
     }
 }

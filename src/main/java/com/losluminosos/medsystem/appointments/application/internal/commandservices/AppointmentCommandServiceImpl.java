@@ -6,6 +6,8 @@ import com.losluminosos.medsystem.appointments.domain.model.commands.DeleteAppoi
 import com.losluminosos.medsystem.appointments.domain.model.commands.UpdateAppointmentReasonCommand;
 import com.losluminosos.medsystem.appointments.domain.services.AppointmentCommandService;
 import com.losluminosos.medsystem.appointments.infrastructure.persistance.jpa.repositories.AppointmentRepository;
+import com.losluminosos.medsystem.shared.domain.model.valueobjects.Specialties;
+import com.losluminosos.medsystem.shared.infrastructure.persistence.jpa.repositories.SpecialtyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,9 +15,12 @@ import java.util.Optional;
 @Service
 public class AppointmentCommandServiceImpl implements AppointmentCommandService {
     private final AppointmentRepository appointmentRepository;
+    private final SpecialtyRepository specialtyRepository;
 
-    public AppointmentCommandServiceImpl(AppointmentRepository appointmentRepository) {
+    public AppointmentCommandServiceImpl(AppointmentRepository appointmentRepository, SpecialtyRepository specialtyRepository) {
         this.appointmentRepository = appointmentRepository;
+
+        this.specialtyRepository = specialtyRepository;
     }
 
     @Override
@@ -23,7 +28,8 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
         if(appointmentRepository.existsByDate(command.date())) {
             throw new IllegalArgumentException("Appointment in date " + command.date() + " already exists");
         }
-        var appointment = new Appointment(command);
+        var specialty = Specialties.valueOf(command.specialty());
+        var appointment = new Appointment(command.doctorId(), command.patientId(), command.date(), command.reason(), specialtyRepository.findByName(specialty).get());
         appointmentRepository.save(appointment);
         return Optional.of(appointment);
     }
