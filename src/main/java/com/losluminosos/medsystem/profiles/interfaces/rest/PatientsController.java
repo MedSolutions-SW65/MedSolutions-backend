@@ -2,7 +2,6 @@ package com.losluminosos.medsystem.profiles.interfaces.rest;
 
 import com.losluminosos.medsystem.profiles.domain.model.queries.GetAllPatientsQuery;
 import com.losluminosos.medsystem.profiles.domain.model.queries.GetPatientByIdQuery;
-import com.losluminosos.medsystem.profiles.domain.model.queries.GetPatientByUserIdQuery;
 import com.losluminosos.medsystem.profiles.domain.services.PatientCommandService;
 import com.losluminosos.medsystem.profiles.domain.services.PatientQueryService;
 import com.losluminosos.medsystem.profiles.interfaces.rest.resources.CreatePatientResource;

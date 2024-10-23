@@ -1,6 +1,6 @@
 package com.losluminosos.medsystem.profiles.domain.model.aggregates;
 
-import com.losluminosos.medsystem.profiles.domain.model.commands.CreateDoctorCommand;
+import com.losluminosos.medsystem.shared.domain.model.entities.Specialty;
 import com.losluminosos.medsystem.profiles.domain.model.valueobjects.EmailAddress;
 import com.losluminosos.medsystem.profiles.domain.model.valueobjects.PersonName;
 import com.losluminosos.medsystem.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
@@ -10,8 +10,6 @@ import lombok.Getter;
 @Getter
 @Entity
 public class Doctor extends AuditableAbstractAggregateRoot<Doctor> {
-
-    private String specialty;
 
     private String licenseNumber;
 
@@ -25,14 +23,18 @@ public class Doctor extends AuditableAbstractAggregateRoot<Doctor> {
 
     private String phone;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "specialty_id")
+    private Specialty specialty;
+
     public Doctor(){}
 
-    public Doctor(CreateDoctorCommand command) {
-        this.name = new PersonName(command.firstName(), command.lastName());
-        this.email = new EmailAddress(command.email());
-        this.phone = command.phone();
-        this.specialty = command.specialty();
-        this.licenseNumber = command.licenceNumber();
+    public Doctor(String firstName, String lastName, String email, String phone, String licenceNumber, Specialty specialty) {
+        this.name = new PersonName(firstName, lastName);
+        this.email = new EmailAddress(email);
+        this.phone = phone;
+        this.licenseNumber = licenceNumber;
+        this.specialty = specialty;
     }
 
     public String getFullName() {

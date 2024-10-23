@@ -10,8 +10,8 @@ public class DoctorResourceFromEntityAssembler {
                 entity.getFullName(),
                 entity.getEmailAddress(),
                 entity.getPhone(),
-                entity.getSpecialty(),
-                entity.getLicenseNumber()
+                entity.getLicenseNumber(),
+                entity.getSpecialty().getStringName()
         );
     }
 }
