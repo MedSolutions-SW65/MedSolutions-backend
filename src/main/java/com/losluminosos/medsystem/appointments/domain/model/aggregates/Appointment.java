@@ -1,6 +1,5 @@
 package com.losluminosos.medsystem.appointments.domain.model.aggregates;
 
-import com.losluminosos.medsystem.appointments.domain.model.commands.CreateAppointmentCommand;
 import com.losluminosos.medsystem.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import com.losluminosos.medsystem.shared.domain.model.entities.Specialty;
 import jakarta.persistence.*;

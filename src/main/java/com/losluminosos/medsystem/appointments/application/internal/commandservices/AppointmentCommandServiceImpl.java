@@ -29,6 +29,8 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
             throw new IllegalArgumentException("Appointment in date " + command.date() + " already exists");
         }
         var specialty = Specialties.valueOf(command.specialty());
+        if(!specialtyRepository.existsByName(specialty))
+            throw new IllegalArgumentException("Specialty " + specialty + " does not exist");
         var appointment = new Appointment(command.doctorId(), command.patientId(), command.date(), command.reason(), specialtyRepository.findByName(specialty).get());
         appointmentRepository.save(appointment);
         return Optional.of(appointment);
