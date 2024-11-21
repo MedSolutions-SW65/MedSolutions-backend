@@ -1,5 +1,7 @@
 package com.losluminosos.medsystem.profiles.interfaces.rest;
 
+import com.losluminosos.medsystem.emailservice.application.internal.commands.commanServices.EmailCommandServiceImpl;
+import com.losluminosos.medsystem.emailservice.domain.model.Commands.SendEmailCommand;
 import com.losluminosos.medsystem.profiles.domain.model.queries.GetAllPatientsQuery;
 import com.losluminosos.medsystem.profiles.domain.model.queries.GetPatientByIdQuery;
 import com.losluminosos.medsystem.profiles.domain.services.PatientCommandService;
@@ -9,6 +11,7 @@ import com.losluminosos.medsystem.profiles.interfaces.rest.resources.PatientReso
 import com.losluminosos.medsystem.profiles.interfaces.rest.transform.CreatePatientCommandFromResourceAssembler;
 import com.losluminosos.medsystem.profiles.interfaces.rest.transform.PatientResourceFromEntityAssembler;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +25,12 @@ import java.util.List;
 public class PatientsController {
     private final PatientQueryService patientQueryService;
     private final PatientCommandService patientCommandService;
+    private final EmailCommandServiceImpl emailService;
 
-    public PatientsController(PatientQueryService patientQueryService, PatientCommandService patientCommandService) {
+    public PatientsController(PatientQueryService patientQueryService, PatientCommandService patientCommandService, EmailCommandServiceImpl emailService) {
         this.patientQueryService = patientQueryService;
         this.patientCommandService = patientCommandService;
+        this.emailService = emailService;
     }
 
     @PostMapping
@@ -33,6 +38,17 @@ public class PatientsController {
         var createPatientCommand = CreatePatientCommandFromResourceAssembler.toCommandFromResource(resource);
         var patient = patientCommandService.handle(createPatientCommand);
         if (patient.isEmpty()) return ResponseEntity.badRequest().build();
+
+        try {
+            var sendEmailCommand = new SendEmailCommand(
+                    resource.email(),
+                    "Bienvenido a MedSystem",
+                    "Hola " + resource.firstName() + " "+ resource.lastName() + " te damos la bienvenida a Medsystem, se ha registrado como paciente"
+            );
+            emailService.handle(sendEmailCommand);
+        } catch (MessagingException e) {
+            return ResponseEntity.status(500).body(null);
+        }
         var patientResource = PatientResourceFromEntityAssembler.toResourceFromEntity(patient.get());
         return new ResponseEntity<>(patientResource, HttpStatus.CREATED);
     }

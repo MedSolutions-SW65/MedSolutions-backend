@@ -52,6 +52,9 @@ public class Patient extends AuditableAbstractAggregateRoot<Patient> {
     }
 
     public String getEmailAddress() {
+        if (email == null || email.address() == null) {
+            throw new RuntimeException("El paciente no tiene un correo electrónico válido.");
+        }
         return email.address();
     }
 
