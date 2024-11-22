@@ -2,6 +2,7 @@ package com.losluminosos.medsystem.medicalservice.application.internal.queryserv
 
 import com.losluminosos.medsystem.medicalservice.domain.model.aggregates.Treatment;
 import com.losluminosos.medsystem.medicalservice.domain.model.queries.GetAllTreatmentsQuery;
+import com.losluminosos.medsystem.medicalservice.domain.model.queries.GetTreatmentByDoctorIdQuery;
 import com.losluminosos.medsystem.medicalservice.domain.model.queries.GetTreatmentByPatientIdQuery;
 import com.losluminosos.medsystem.medicalservice.domain.services.TreatmentQueryService;
 import com.losluminosos.medsystem.medicalservice.infrastructure.persistence.jpa.repositories.TreatmentRepository;
@@ -27,5 +28,10 @@ public class TreatmentQueryServiceImpl implements TreatmentQueryService {
     @Override
     public Optional<Treatment> handle(GetTreatmentByPatientIdQuery query) {
         return treatmentRepository.findByPatientId(query.patientId());
+    }
+
+    @Override
+    public Optional<Treatment> handle(GetTreatmentByDoctorIdQuery query) {
+        return treatmentRepository.findByDoctorId(query.doctorId());
     }
 }

@@ -19,6 +19,9 @@ public class Treatment extends AuditableAbstractAggregateRoot<Treatment> {
     @Getter
     @Column(name = "patient_id")
     private Long patientId;
+    @Getter
+    @Column(name = "doctor_id")
+    private Long doctorId;
 
     @Embedded
     @AttributeOverrides({
@@ -41,6 +44,7 @@ public class Treatment extends AuditableAbstractAggregateRoot<Treatment> {
         this.treatmentName=command.treatmentName();
         this.description=command.description();
         this.patientId=command.patientId();
+        this.doctorId=command.doctorId();
         this.period=new Period(command.startDate(), command.endDate());
     }
 

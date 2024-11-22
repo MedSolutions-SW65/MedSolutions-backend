@@ -2,6 +2,7 @@ package com.losluminosos.medsystem.medicalservice.interfaces.rest;
 
 import com.losluminosos.medsystem.medicalservice.domain.model.commands.DeleteTreatmentCommand;
 import com.losluminosos.medsystem.medicalservice.domain.model.queries.GetAllTreatmentsQuery;
+import com.losluminosos.medsystem.medicalservice.domain.model.queries.GetTreatmentByDoctorIdQuery;
 import com.losluminosos.medsystem.medicalservice.domain.model.queries.GetTreatmentByPatientIdQuery;
 import com.losluminosos.medsystem.medicalservice.domain.services.TreatmentCommandService;
 import com.losluminosos.medsystem.medicalservice.domain.services.TreatmentQueryService;
@@ -51,6 +52,16 @@ public class TreatmentsController {
     public ResponseEntity<TreatmentResource> getTreatmentByPatientId(@PathVariable Long patientId){
         var getTreatmentByPatientIdQuery = new GetTreatmentByPatientIdQuery(patientId);
         var treatment = treatmentQueryService.handle(getTreatmentByPatientIdQuery);
+        if (treatment.isEmpty())
+            return ResponseEntity.notFound().build();
+        var treatmentResource = TreatmentResourceFromEntityAssembler.toResourceFromEntity(treatment.get());
+        return ResponseEntity.ok(treatmentResource);
+    }
+
+    @GetMapping("doctorId/{doctorId}")
+    public ResponseEntity<TreatmentResource> getTreatmentByDoctorId(@PathVariable Long doctorId){
+        var getTreatmentByDoctorIdQuery = new GetTreatmentByDoctorIdQuery(doctorId);
+        var treatment = treatmentQueryService.handle(getTreatmentByDoctorIdQuery);
         if (treatment.isEmpty())
             return ResponseEntity.notFound().build();
         var treatmentResource = TreatmentResourceFromEntityAssembler.toResourceFromEntity(treatment.get());

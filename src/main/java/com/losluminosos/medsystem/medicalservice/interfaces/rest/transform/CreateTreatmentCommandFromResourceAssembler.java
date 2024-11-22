@@ -5,6 +5,6 @@ import com.losluminosos.medsystem.medicalservice.interfaces.rest.resources.Creat
 
 public class CreateTreatmentCommandFromResourceAssembler {
     public static CreateTreatmentCommand toCommandFromResource(CreateTreatmentResource resource){
-        return new CreateTreatmentCommand(resource.treatmentName(), resource.description(), resource.startDate(), resource.endDate(), resource.patientId());
+        return new CreateTreatmentCommand(resource.treatmentName(), resource.description(), resource.startDate(), resource.endDate(), resource.patientId(), resource.doctorId());
     }
 }

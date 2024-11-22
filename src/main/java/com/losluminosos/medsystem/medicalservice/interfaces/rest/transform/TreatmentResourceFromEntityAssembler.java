@@ -6,6 +6,6 @@ import com.losluminosos.medsystem.medicalservice.interfaces.rest.resources.Treat
 public class TreatmentResourceFromEntityAssembler {
     public static TreatmentResource toResourceFromEntity(Treatment entity){
         return new TreatmentResource(entity.getId(), entity.getTreatmentName(),entity.getDescription(),
-                entity.getPeriod(), entity.getPatientId());
+                entity.getPeriod(), entity.getPatientId(), entity.getDoctorId());
     }
 }
