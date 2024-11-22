@@ -4,6 +4,7 @@ import com.losluminosos.medsystem.emailservice.application.internal.commands.com
 import com.losluminosos.medsystem.emailservice.domain.model.Commands.SendEmailCommand;
 import com.losluminosos.medsystem.profiles.domain.model.queries.GetAllDoctorsQuery;
 import com.losluminosos.medsystem.profiles.domain.model.queries.GetDoctorByIdQuery;
+import com.losluminosos.medsystem.profiles.domain.model.queries.GetDoctorByUidQuery;
 import com.losluminosos.medsystem.profiles.domain.services.DoctorCommandService;
 import com.losluminosos.medsystem.profiles.domain.services.DoctorQueryService;
 import com.losluminosos.medsystem.profiles.interfaces.rest.resources.CreateDoctorResource;
@@ -69,6 +70,15 @@ public class DoctorsController {
         var doctor = doctorQueryService.handle(getDoctorByIdQuery);
         if (doctor.isEmpty())
             return ResponseEntity.notFound().build();
+        var doctorResource = DoctorResourceFromEntityAssembler.toResourceFromEntity(doctor.get());
+        return ResponseEntity.ok(doctorResource);
+    }
+
+    @GetMapping("/uid/{uid}")
+    public ResponseEntity<DoctorResource> getDoctorByUid(@PathVariable String uid) {
+        var getDoctorByUidQuery = new GetDoctorByUidQuery(uid);
+        var doctor = doctorQueryService.handle(getDoctorByUidQuery);
+        if (doctor.isEmpty()) return ResponseEntity.notFound().build();
         var doctorResource = DoctorResourceFromEntityAssembler.toResourceFromEntity(doctor.get());
         return ResponseEntity.ok(doctorResource);
     }

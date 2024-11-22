@@ -22,9 +22,23 @@ public class DoctorCommandServiceImpl implements DoctorCommandService {
 
     @Override
     public Optional<Doctor> handle(CreateDoctorCommand command) {
+        // Validar si el UID ya existe
+        if (doctorRepository.existsByUid(command.uid())) {
+            throw new IllegalArgumentException("A doctor with this UID already exists.");
+        }
+
         var specialty = Specialties.valueOf(command.specialty());
-        var doctor = new Doctor(command.firstName(), command.lastName(), command.email(), command.phone(), command.licenceNumber(), specialtyRepository.findByName(specialty).get());
+        var doctor = new Doctor(
+                command.uid(),
+                command.firstName(),
+                command.lastName(),
+                command.email(),
+                command.phone(),
+                command.licenceNumber(),
+                specialtyRepository.findByName(specialty).orElseThrow(() -> new IllegalArgumentException("Invalid specialty"))
+        );
         doctorRepository.save(doctor);
         return Optional.of(doctor);
     }
 }
+

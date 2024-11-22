@@ -6,6 +6,7 @@ import com.losluminosos.medsystem.profiles.interfaces.rest.resources.CreateDocto
 public class CreateDoctorCommandFromResourceAssembler {
     public static CreateDoctorCommand toCommandFromResource(CreateDoctorResource resource) {
         return new CreateDoctorCommand(
+                resource.uid(), // UID
                 resource.firstName(),
                 resource.lastName(),
                 resource.email(),

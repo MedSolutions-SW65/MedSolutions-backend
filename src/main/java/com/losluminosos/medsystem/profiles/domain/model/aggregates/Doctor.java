@@ -11,6 +11,9 @@ import lombok.Getter;
 @Entity
 public class Doctor extends AuditableAbstractAggregateRoot<Doctor> {
 
+    @Column(unique = true, nullable = false) // UID debe ser único
+    private String uid;
+
     private String licenseNumber;
 
     @Embedded
@@ -27,9 +30,10 @@ public class Doctor extends AuditableAbstractAggregateRoot<Doctor> {
     @JoinColumn(name = "specialty_id")
     private Specialty specialty;
 
-    public Doctor(){}
+    public Doctor() {}
 
-    public Doctor(String firstName, String lastName, String email, String phone, String licenceNumber, Specialty specialty) {
+    public Doctor(String uid, String firstName, String lastName, String email, String phone, String licenceNumber, Specialty specialty) {
+        this.uid = uid;
         this.name = new PersonName(firstName, lastName);
         this.email = new EmailAddress(email);
         this.phone = phone;
@@ -38,9 +42,10 @@ public class Doctor extends AuditableAbstractAggregateRoot<Doctor> {
     }
 
     public String getFullName() {
-        return name.getFullName();
+        return name != null ? name.getFullName() : "Unknown Name";
     }
 
     public String getEmailAddress() {
         return email.address();
-    }}
+    }
+}

@@ -3,6 +3,7 @@ package com.losluminosos.medsystem.profiles.application.internal.queryservices;
 import com.losluminosos.medsystem.profiles.domain.model.aggregates.Doctor;
 import com.losluminosos.medsystem.profiles.domain.model.queries.GetAllDoctorsQuery;
 import com.losluminosos.medsystem.profiles.domain.model.queries.GetDoctorByIdQuery;
+import com.losluminosos.medsystem.profiles.domain.model.queries.GetDoctorByUidQuery;
 import com.losluminosos.medsystem.profiles.domain.services.DoctorQueryService;
 import com.losluminosos.medsystem.profiles.infrastructure.persistence.jpa.repositories.DoctorRepository;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,12 @@ public class DoctorQueryServiceImpl implements DoctorQueryService {
     }
 
     @Override
-    public List<Doctor> handle(GetAllDoctorsQuery query) {return doctorRepository.findAll();}
+    public List<Doctor> handle(GetAllDoctorsQuery query) {
+        return doctorRepository.findAll();
+    }
 
+    @Override
+    public Optional<Doctor> handle(GetDoctorByUidQuery query) {
+        return doctorRepository.findByUid(query.uid());
+    }
 }
