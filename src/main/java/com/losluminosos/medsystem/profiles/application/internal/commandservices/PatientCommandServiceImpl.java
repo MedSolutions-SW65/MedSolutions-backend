@@ -18,8 +18,16 @@ public class PatientCommandServiceImpl implements PatientCommandService {
 
     @Override
     public Optional<Patient> handle(CreatePatientCommand command) {
+
+
+        // Validar si el UID ya existe
+        if (patientRepository.existsByUid(command.uid())) {
+            throw new IllegalArgumentException("A patient with this UID already exists.");
+        }
         var patient = new Patient(command);
         patientRepository.save(patient);
         return Optional.of(patient);
     }
+
+
 }

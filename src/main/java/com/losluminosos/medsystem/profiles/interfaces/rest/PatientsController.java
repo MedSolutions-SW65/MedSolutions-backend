@@ -4,6 +4,7 @@ import com.losluminosos.medsystem.emailservice.application.internal.commands.com
 import com.losluminosos.medsystem.emailservice.domain.model.Commands.SendEmailCommand;
 import com.losluminosos.medsystem.profiles.domain.model.queries.GetAllPatientsQuery;
 import com.losluminosos.medsystem.profiles.domain.model.queries.GetPatientByIdQuery;
+import com.losluminosos.medsystem.profiles.domain.model.queries.GetPatientByUidQuery;
 import com.losluminosos.medsystem.profiles.domain.services.PatientCommandService;
 import com.losluminosos.medsystem.profiles.domain.services.PatientQueryService;
 import com.losluminosos.medsystem.profiles.interfaces.rest.resources.CreatePatientResource;
@@ -65,6 +66,16 @@ public class PatientsController {
     public ResponseEntity<PatientResource> getPatientById(@PathVariable Long id) {
         var getPatientByIdQuery = new GetPatientByIdQuery(id);
         var patient = patientQueryService.handle(getPatientByIdQuery);
+        if (patient.isEmpty())
+            return ResponseEntity.notFound().build();
+        var patientResource = PatientResourceFromEntityAssembler.toResourceFromEntity(patient.get());
+        return ResponseEntity.ok(patientResource);
+    }
+
+    @GetMapping("/uid/{uid}")
+    public ResponseEntity<PatientResource> getPatientByUid(@PathVariable String uid) {
+        var getPatientByUidQuery = new GetPatientByUidQuery(uid);
+        var patient = patientQueryService.handle(getPatientByUidQuery);
         if (patient.isEmpty())
             return ResponseEntity.notFound().build();
         var patientResource = PatientResourceFromEntityAssembler.toResourceFromEntity(patient.get());

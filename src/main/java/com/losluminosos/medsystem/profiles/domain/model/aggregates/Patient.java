@@ -14,6 +14,8 @@ import lombok.Getter;
 @Getter
 public class Patient extends AuditableAbstractAggregateRoot<Patient> {
 
+    @Column(unique = true, nullable = false) // UID debe ser único
+    private String uid;
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "street", column = @Column(name = "address_street")),
@@ -38,6 +40,7 @@ public class Patient extends AuditableAbstractAggregateRoot<Patient> {
 
 
     public Patient(CreatePatientCommand command) {
+        this.uid = command.uid();
         this.name = new PersonName(command.firstName(), command.lastName());
         this.email = new EmailAddress(command.email());
         this.phone = command.phone();
